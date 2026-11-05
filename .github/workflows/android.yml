@@ -1,0 +1,50 @@
+name: APK de Android
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Pruebas
+        run: npm test
+
+      - name: Compilar la app y copiarla al proyecto Android
+        run: npm run android
+
+      - name: Compilar el APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleRelease -PversionCode=${{ github.run_number }}
+          cp app/build/outputs/apk/release/app-release.apk ../Constancia.apk
+
+      - name: Publicar en Releases (descarga directa desde el celular)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: Constancia 1.0.${{ github.run_number }}
+          body: Descarga **Constancia.apk** desde el celular e instálala. Las versiones nuevas se instalan encima sin perder tus datos.
+          files: Constancia.apk
+          make_latest: true

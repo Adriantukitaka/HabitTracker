@@ -1,0 +1,937 @@
+:root {
+  --ground: #f6f6f3;
+  --card: #ffffff;
+  --sunken: #efefea;
+  --seg: #ebebe6;
+  --ink: #17181c;
+  --ink-2: #4a4c53;
+  --muted: #5e6068;
+  --line: #e4e3de;
+  --line-2: #efefec;
+  --control: #c9cbd1;
+  --green: #1f883d;
+  --green-2: #2da44e;
+  --green-ink: #116329;
+  --green-bg: #dafbe1;
+  --green-soft: #e9f7ee;
+  --amber: #d97706;
+  --amber-ink: #8a4b00;
+  --amber-bg: #fff4e0;
+  --orange: #c2410c;
+  --orange-ink: #9a3412;
+  --orange-bg: #fff1ea;
+  --orange-line: #f3c3ae;
+  --red: #b42318;
+  --heat-0: #ebedf0;
+  --heat-1: #9be9a8;
+  --heat-2: #40c463;
+  --heat-3: #30a14e;
+  --heat-4: #216e39;
+  --radius: 14px;
+  --font: Manrope, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --tabbar-h: 72px;
+  /* Android edge-to-edge: Capacitor inyecta --safe-area-inset-*; env() cubre el navegador. */
+  --safe-top: max(env(safe-area-inset-top, 0px), var(--safe-area-inset-top, 0px));
+  --safe-bottom: max(env(safe-area-inset-bottom, 0px), var(--safe-area-inset-bottom, 0px));
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+input,
+textarea {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+.mono {
+  font-family: var(--mono);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* ---------------------------------------------------------------- estructura */
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  position: relative;
+}
+
+.screen {
+  padding: calc(20px + var(--safe-top)) 20px calc(var(--tabbar-h) + var(--safe-bottom) + 96px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.screen.no-tabs {
+  padding-bottom: calc(var(--safe-bottom) + 120px);
+}
+
+.eyebrow {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+h1.title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h2.section {
+  margin: 10px 0 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+h2.block {
+  margin: 4px 0 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.spread {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 12px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.pad {
+  padding: 12px 14px;
+}
+
+/* ---------------------------------------------------------------- botones */
+
+.btn {
+  min-height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--control);
+  background: var(--card);
+  padding: 0 14px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.btn-primary {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+  min-height: 52px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: var(--radius);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-pill {
+  border-radius: 22px;
+}
+
+.btn-link {
+  background: none;
+  border: 0;
+  padding: 0 2px;
+  min-height: 40px;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--green-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  border: 1.5px solid var(--control);
+  background: var(--card);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.back {
+  align-self: flex-start;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: -6px;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+/* ---------------------------------------------------------------- progreso y estados */
+
+.bar {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--line);
+  overflow: hidden;
+  flex: 1;
+}
+
+.bar > span {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--green-2);
+  transition: width 0.25s ease;
+}
+
+.bar.thin {
+  height: 6px;
+}
+
+.pill {
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.pill.done {
+  background: var(--green-bg);
+  color: var(--green-ink);
+}
+
+.pill.partial {
+  background: var(--amber-bg);
+  color: var(--amber-ink);
+}
+
+.pill.pending {
+  background: #efefec;
+  color: var(--ink-2);
+}
+
+.pill.conflict {
+  background: var(--orange-bg);
+  color: var(--orange-ink);
+}
+
+.pill.missed {
+  background: #fdecea;
+  color: var(--red);
+}
+
+/* ---------------------------------------------------------------- Hoy */
+
+.now-card {
+  background: var(--card);
+  border: 2px solid var(--green-2);
+  border-radius: 18px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.now-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--green-ink);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.item {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px 12px 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.item.done {
+  background: #f0f0ec;
+  border-color: transparent;
+}
+
+.item .time {
+  width: 44px;
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-2);
+}
+
+.item .name {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.item.done .name {
+  color: var(--ink-2);
+}
+
+.check-done {
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  background: var(--green-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------- barra de pestañas */
+
+.tabbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--card);
+  border-top: 1px solid var(--line);
+  padding: 6px 12px calc(8px + var(--safe-bottom));
+  z-index: 20;
+}
+
+.tabbar-inner {
+  max-width: 480px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.tab {
+  height: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  position: relative;
+}
+
+.tab.active {
+  color: var(--green);
+  font-weight: 700;
+}
+
+.badge {
+  position: absolute;
+  top: 6px;
+  left: calc(50% + 6px);
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: var(--orange);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------------------------------------------------------------- toast y hoja */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(var(--tabbar-h) + var(--safe-bottom) + 14px);
+  width: calc(100% - 32px);
+  max-width: 448px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 12px;
+  min-height: 52px;
+  padding: 0 6px 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  z-index: 30;
+  font-size: 14px;
+  font-weight: 500;
+  animation: rise 0.18s ease-out;
+}
+
+.toast.high {
+  bottom: calc(var(--safe-bottom) + 96px);
+}
+
+.toast button {
+  min-height: 44px;
+  padding: 0 12px;
+  border: 0;
+  background: transparent;
+  color: #7ee2a8;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+  }
+}
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(23, 24, 28, 0.45);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 40;
+}
+
+.sheet {
+  background: var(--card);
+  border-radius: 22px 22px 0 0;
+  padding: 12px 20px calc(24px + var(--safe-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  animation: sheet 0.2s ease-out;
+}
+
+.sheet .grip {
+  align-self: center;
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: #d6d5cf;
+}
+
+@keyframes sheet {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+}
+
+.compare {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.compare > div {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 14px;
+  font-size: 14px;
+}
+
+.compare > div + div {
+  border-top: 1px solid var(--line-2);
+}
+
+/* ---------------------------------------------------------------- footer fijo */
+
+.footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--card);
+  border-top: 1px solid var(--line);
+  padding: 12px 20px calc(14px + var(--safe-bottom));
+  z-index: 20;
+}
+
+.footer-inner {
+  max-width: 440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-row {
+  display: flex;
+  gap: 10px;
+}
+
+/* ---------------------------------------------------------------- formularios */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label,
+.label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.input,
+.select {
+  height: 48px;
+  border-radius: 12px;
+  border: 1px solid var(--control);
+  background: var(--card);
+  padding: 0 14px;
+  font-size: 16px;
+  width: 100%;
+  min-width: 0;
+}
+
+.input.invalid {
+  border: 1.5px solid var(--red);
+}
+
+.error {
+  font-size: 13px;
+  color: var(--red);
+}
+
+.seg {
+  display: grid;
+  gap: 4px;
+  background: var(--seg);
+  padding: 4px;
+  border-radius: 12px;
+}
+
+.seg button {
+  min-height: 40px;
+  border-radius: 9px;
+  border: 0;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.seg button[aria-selected='true'],
+.seg button[aria-pressed='true'] {
+  background: var(--card);
+  color: var(--ink);
+  font-weight: 700;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.choice {
+  min-height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--control);
+  background: var(--card);
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.choice[aria-pressed='true'],
+.choice[aria-checked='true'] {
+  border: 1.5px solid var(--green);
+  background: var(--green-soft);
+  color: var(--green-ink);
+}
+
+.switch {
+  width: 52px;
+  height: 32px;
+  border-radius: 16px;
+  border: 0;
+  background: #a3a5ac;
+  padding: 3px;
+  display: flex;
+  justify-content: flex-start;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.switch[aria-checked='true'] {
+  background: var(--green-2);
+  justify-content: flex-end;
+}
+
+.switch span {
+  width: 26px;
+  height: 26px;
+  border-radius: 13px;
+  background: #fff;
+}
+
+.alert {
+  background: var(--orange-bg);
+  border: 1px solid var(--orange-line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #7a2e0e;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ok-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--green-ink);
+  font-weight: 600;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.steps span {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--line);
+}
+
+.steps span.on {
+  background: var(--green-2);
+}
+
+/* ---------------------------------------------------------------- registro */
+
+.acc {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.acc.open {
+  border: 1.5px solid #9a9ca3;
+}
+
+.acc-head {
+  width: 100%;
+  min-height: 60px;
+  padding: 10px 14px;
+  border: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.acc-body {
+  padding: 4px 14px 14px;
+  border-top: 1px solid var(--line-2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dot {
+  width: 26px;
+  height: 26px;
+  border-radius: 13px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--control);
+  background: var(--card);
+}
+
+.dot.done {
+  background: var(--green-2);
+  border: 0;
+}
+
+.dot.partial {
+  background: var(--amber-bg);
+  border: 2px solid var(--amber);
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--control);
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.stepper button {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: var(--card);
+  font-size: 18px;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.stepper input {
+  width: 56px;
+  height: 44px;
+  border: 0;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 500;
+  -moz-appearance: textfield;
+}
+
+.stepper input::-webkit-outer-spin-button,
+.stepper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------- tablero y progreso */
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.kpi {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.kpi .label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.kpi .value {
+  font-family: var(--mono);
+  font-size: 20px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kpi.hero {
+  border: 1.5px solid var(--green-2);
+}
+
+.kpi.hero .label {
+  color: var(--green-ink);
+  font-weight: 700;
+}
+
+.heat {
+  display: flex;
+  gap: 3px;
+}
+
+.heat-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.heat-cell {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.legend span.sw {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+table.records {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+table.records th {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+table.records td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--line-2);
+}
+
+table.records tr:last-child td {
+  border-bottom: 0;
+}
+
+table.records .num {
+  text-align: right;
+  font-family: var(--mono);
+}
+
+.empty {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #ececE8 0%, #f4f4f1 50%, #ececE8 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite linear;
+  border-radius: var(--radius);
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.banner {
+  background: var(--amber-bg);
+  color: var(--amber-ink);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
